@@ -1,57 +1,73 @@
+function formatDate(date) {
+  let nowHour = now.getHours();
+  if (nowHour < 10) {
+    nowHour = `0${nowHour}`;
+  }
+  let nowMinute = now.getMinutes();
+  if (nowMinute < 10) {
+    nowMinute = `0${nowMinute}`;
+  }
+
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
+  let dayName = days[now.getDay()];
+  return ` ${dayName} ${nowHour}:${nowMinute}`;
+}
+
 let now = new Date();
 
-let days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
+let dateElement = document.querySelector("#wholedate");
 
-let DayOfTheWeek = document.querySelector("#days");
-let dayName = days[now.getDay()];
-DayOfTheWeek.innerHTML = `${dayName}`;
+dateElement.innerHTML = formatDate(now);
 
-let hour = document.querySelector("#hours");
-let nowHour = now.getHours();
-hour.innerHTML = `${nowHour}`;
-if (nowHour > 10) {
-  hour = `0${nowHour}`;
+function weatherChange(response) {
+  document.querySelector("#description").innerHTML =
+    response.data.weather[0].main;
+  document.querySelector("#gdansk").innerHTML = response.data.name;
+  document.querySelector("#temp").innerHTML = Math.round(
+    response.data.main.temp
+  );
+  document.querySelector("#humi").innerHTML = Math.round(
+    response.data.main.humidity
+  );
+  document.querySelector("#win").innerHTML = Math.round(
+    response.data.wind.speed
+  );
+}
+function searchCity(cityInfo) {
+  let apiKey = "bdb726d3c36ca48dac658c3157e54cdf";
+  let apiWholeUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityInfo}&appid=${apiKey}&units=metric`;
+  axios.get(apiWholeUrl).then(weatherChange);
 }
 
-let minute = document.querySelector("#minutes");
-let nowMinute = now.getMinutes();
-minute.innerHTML = `${nowMinute}`;
-if (nowMinute > 10) {
-  minute = `0${nowMinute}`;
-}
-
-let showCity = document.querySelector("#gdansk");
-let putCity = document.querySelector("#submited");
-let cityInfo = document.querySelector("#givenCity");
-
-function change(event) {
+function handleSubmit(event) {
   event.preventDefault();
-  showCity.innerHTML = `${cityInfo.value}`;
+  let cityInfo = document.querySelector("#givenCity").value;
+  searchCity(cityInfo);
 }
 
-putCity.addEventListener("submit", change);
+function location(position) {
+  let apiKey = "bdb726d3c36ca48dac658c3157e54cdf";
+  let apiWholeUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`;
+  axios.get(apiWholeUrl).then(weatherChange);
+}
 
-let temperatureValue = document.querySelector("#temp");
-
-function changeCel(event) {
+function getCurrentLocation(event) {
   event.preventDefault();
-  temperatureValue.innerHTML = `19`;
-}
-function changeFah(event) {
-  event.preventDefault();
-  temperatureValue.innerHTML = `66`;
+  navigator.geolocation.getCurrentPosition(location);
 }
 
-let celsius = document.querySelector("#cel");
-celsius.addEventListener("click", changeCel);
+let formSub = document.querySelector("#submited");
+formSub.addEventListener("submit", handleSubmit);
 
-let fahrenheit = document.querySelector("#fah");
-fahrenheit.addEventListener("click", changeFah);
+let currentLocationButton = document.querySelector("#currentLocation");
+currentLocationButton.addEventListener("click", getCurrentLocation);
+
+searchCity("New York");
