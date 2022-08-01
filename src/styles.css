@@ -1,6 +1,7 @@
 h1 {
   text-align: left;
   padding-top: 20px;
+  font-size: 26px;
 }
 ul {
   list-style-type: none;
@@ -8,14 +9,13 @@ ul {
 .container {
   border-style: solid;
   border-radius: 4px;
-  border-color: gray;
-
+  border-color: #724060;
+  background-color: #fdf3f3;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
-  color: gray;
+  color: #724060;
   max-width: 600px;
-
-  margin: 15px;
+  margin-top: 15px;
 }
 .console {
   text-align: center;
@@ -25,19 +25,25 @@ form {
   padding-bottom: 20px;
 }
 .temperature {
+  color: #724060;
+  font-size: 40px;
+}
+.temp {
   text-decoration: none;
-  color: gray;
-  font-size: 55px;
+  color: #a070a1;
 }
 button {
-  background-color: #ffe168;
-  color: gray;
+  background-color: #a070a1;
+  color: #fdf3f3;
   border-radius: 4px;
-  border: red;
 }
 .signature {
-  margin-left: 40px;
+  text-align: center;
 }
 .gitlink {
-  color: #ffe168;
+  color: #a070a1;
+}
+.wholepage {
+  display: block;
+  margin: 0px auto;
 }
