@@ -14,7 +14,7 @@ ul {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
   color: #724060;
-  max-width: 600px;
+  max-width: 500px;
   margin-top: 15px;
 }
 .console {
@@ -27,10 +27,17 @@ form {
 .temperature {
   color: #724060;
   font-size: 40px;
+  cursor: default;
 }
-.temp {
+.temp .active {
   text-decoration: none;
   color: #a070a1;
+  cursor: default;
+}
+.temp .sectemp {
+  text-decoration: none;
+  color: #a070a1;
+  cursor: default;
 }
 button {
   background-color: #a070a1;
@@ -46,4 +53,8 @@ button {
 .wholepage {
   display: block;
   margin: 0px auto;
+}
+.picture {
+  position: relative;
+  top: -20px;
 }

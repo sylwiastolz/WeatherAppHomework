@@ -35,20 +35,24 @@
             </ul>
           </div>
 
-          <div class="col-1">
-            <img src="partly_cloudy.png" alt="sun" />
+          <div class="col-2">
+            <img id="icon" class="picture" src="#" alt="weatherpicture" />
           </div>
-          <div class="col-6">
+          <div class="col-5">
             <span class="temperature">
-              <span id="temp"></span><a href="#" class="temp">°C</a>|<a
-                href="#"
-                class="temp"
-                >°F</a
+              <span id="temp"></span>
+              <span class="temp">
+                <a href="#" id="cel" class="active">°C</a>|<a
+                  href="#"
+                  id="fah"
+                  class="sectemp"
+                  >°F</a
+                ></span
               >
             </span>
           </div>
         </div>
-        <br />
+
         <form class="console" id="submited">
           <input
             id="givenCity"
