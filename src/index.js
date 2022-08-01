@@ -27,21 +27,49 @@ let dateElement = document.querySelector("#wholedate");
 
 dateElement.innerHTML = formatDate(now);
 
-function displayForecast() {
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  return days[day];
+}
+
+function displayForecast(response) {
+  let forecast = response.data.daily;
   let forecastElement = document.querySelector("#weatherForecastWindow");
   let forecastHTML = `<div class=row>`;
-  let days = ["Mon", "Tue", "Wed", "Thu"];
-  days.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `<div class="col-3">
-  <span class"day">${day}</span>
-  <div><img src="partly_cloudy.png"/></div>
-  <span>18</span> 
+
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 5 && index > 0) {
+      forecastHTML =
+        forecastHTML +
+        `<div class="col-3">
+  <span class"day">${formatDay(forecastDay.dt)}</span>
+  <div>    <img
+  src="http://openweathermap.org/img/wn/${forecastDay.weather[0].icon}@2x.png"
+  alt=""
+  width="42"
+/></div>
+  <div class="weather-forecast-temperatures">
+  <span class="weather-forecast-temperature-max"> ${Math.round(
+    forecastDay.temp.max
+  )}°| </span>
+  <span class="weather-forecast-temperature-min"> ${Math.round(
+    forecastDay.temp.min
+  )}° </span>
+</div>
   </div>`;
+    }
   });
   forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
+}
+function getForecast(coordinates) {
+  console.log(coordinates);
+  let apiKey = "58b3466d5113849cc0dbfb1ee306eb84";
+  let forecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  axios.get(forecastUrl).then(displayForecast);
 }
 
 function weatherChange(response) {
@@ -64,9 +92,10 @@ function weatherChange(response) {
     "src",
     `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
   );
+  getForecast(response.data.coord);
 }
 function searchCity(cityInfo) {
-  let apiKey = "bdb726d3c36ca48dac658c3157e54cdf";
+  let apiKey = "58b3466d5113849cc0dbfb1ee306eb84";
   let apiWholeUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityInfo}&appid=${apiKey}&units=metric`;
   axios.get(apiWholeUrl).then(weatherChange);
 }
@@ -78,7 +107,7 @@ function handleSubmit(event) {
 }
 
 function location(position) {
-  let apiKey = "bdb726d3c36ca48dac658c3157e54cdf";
+  let apiKey = "58b3466d5113849cc0dbfb1ee306eb84";
   let apiWholeUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`;
   axios.get(apiWholeUrl).then(weatherChange);
 }
@@ -120,5 +149,4 @@ fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
 let celsiusLink = document.querySelector("#cel");
 celsiusLink.addEventListener("click", displayCelsiusTemperature);
 
-displayForecast();
 searchCity("New York");
