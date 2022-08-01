@@ -18,7 +18,10 @@ ul {
   margin-top: 15px;
 }
 .console {
+  position: relative;
+  right: -30px;
   text-align: center;
+  display: inline-flex;
 }
 
 form {
@@ -39,10 +42,11 @@ form {
   color: #a070a1;
   cursor: default;
 }
-button {
+.button {
   background-color: #a070a1;
   color: #fdf3f3;
   border-radius: 4px;
+  border-color: #a070a1;
 }
 .signature {
   text-align: center;
@@ -58,3 +62,4 @@ button {
   position: relative;
   top: -20px;
 }
+
