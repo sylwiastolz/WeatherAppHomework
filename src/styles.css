@@ -62,4 +62,7 @@ form {
   position: relative;
   top: -20px;
 }
-
+.weather-forecast {
+  position: relative;
+  right: -30px;
+}

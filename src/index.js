@@ -27,6 +27,23 @@ let dateElement = document.querySelector("#wholedate");
 
 dateElement.innerHTML = formatDate(now);
 
+function displayForecast() {
+  let forecastElement = document.querySelector("#weatherForecastWindow");
+  let forecastHTML = `<div class=row>`;
+  let days = ["Mon", "Tue", "Wed", "Thu"];
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `<div class="col-3">
+  <span class"day">${day}</span>
+  <div><img src="partly_cloudy.png"/></div>
+  <span>18</span> 
+  </div>`;
+  });
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
+}
+
 function weatherChange(response) {
   document.querySelector("#description").innerHTML =
     response.data.weather[0].main;
@@ -103,4 +120,5 @@ fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
 let celsiusLink = document.querySelector("#cel");
 celsiusLink.addEventListener("click", displayCelsiusTemperature);
 
+displayForecast();
 searchCity("New York");
