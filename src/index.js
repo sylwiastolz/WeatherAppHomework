@@ -15,7 +15,7 @@ function formatDate(date) {
     "Wednesday",
     "Thursday",
     "Friday",
-    "Saturday"
+    "Saturday",
   ];
   let dayName = days[now.getDay()];
   return ` ${dayName} ${nowHour}:${nowMinute}`;
@@ -106,7 +106,7 @@ function handleSubmit(event) {
   searchCity(cityInfo);
 }
 
-function location(position) {
+function findlocation(position) {
   let apiKey = "58b3466d5113849cc0dbfb1ee306eb84";
   let apiWholeUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`;
   axios.get(apiWholeUrl).then(weatherChange);
@@ -114,7 +114,7 @@ function location(position) {
 
 function getCurrentLocation(event) {
   event.preventDefault();
-  navigator.geolocation.getCurrentPosition(location);
+  navigator.geolocation.getCurrentPosition(findlocation);
 }
 
 let formSub = document.querySelector("#submited");
